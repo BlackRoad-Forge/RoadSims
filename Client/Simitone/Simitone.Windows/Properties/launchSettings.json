@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Simitone.Windows": {
+      "commandName": "Project"
+    },
+    "Simitone.Windows 3D": {
+      "commandName": "Project",
+      "commandLineArgs": "-3d"
+    }
+  }
+}

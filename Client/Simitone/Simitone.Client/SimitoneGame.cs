@@ -267,10 +267,12 @@ namespace Simitone.Client
             // TODO: Unload any non ContentManager content here
         }
 
-        protected override void OnExiting(object sender, EventArgs args)
+
+        protected override void OnExiting(object sender, ExitingEventArgs args)
         {
             base.OnExiting(sender, args);
             GameThread.SetKilled();
+            args.Cancel = !(GameFacade.Screens.CurrentUIScreen?.CloseAttempt() ?? true);
         }
 
         /// <summary>

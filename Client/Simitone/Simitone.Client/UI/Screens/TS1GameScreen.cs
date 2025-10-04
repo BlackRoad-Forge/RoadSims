@@ -767,8 +767,11 @@ namespace Simitone.Client.UI.Screens
         }
 
         private UIMobileAlert CloseAlert;
+        private bool _exit = false;
         public override bool CloseAttempt()
         {
+            if (_exit) return true;
+
             GameThread.NextUpdate(x =>
             {
                 if (CloseAlert == null)
@@ -781,13 +784,13 @@ namespace Simitone.Client.UI.Screens
                         Buttons = 
                         canSave?
                         UIAlertButton.YesNoCancel(
-                            (b) => { Save(); GameFacade.Game.Exit(); },
-                            (b) => { GameFacade.Game.Exit(); },
+                            (b) => { Save(); _exit = true; GameFacade.Game.Exit(); },
+                            (b) => { _exit = true; GameFacade.Game.Exit(); },
                             (b) => { CloseAlert.Close(); CloseAlert = null; }
                             )
                         :
                         UIAlertButton.YesNo(
-                            (b) => { GameFacade.Game.Exit(); },
+                            (b) => { _exit = true; GameFacade.Game.Exit(); },
                             (b) => { CloseAlert.Close(); CloseAlert = null; }
                             )
                     });

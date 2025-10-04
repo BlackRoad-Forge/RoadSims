@@ -45,6 +45,7 @@ namespace Simitone.Windows
             var useDX = !linux;
             var path = gameLocator.FindTheSims1();
 
+
             FSOEnvironment.Enable3D = false;
             bool ide = false;
             bool aa = false;
@@ -92,6 +93,9 @@ namespace Simitone.Windows
                             case "nosound":
                                 FSOEnvironment.NoSound = true;
                                 break;
+                            case string s when s.StartsWith("path"): //The Sims path
+                                path = s.Length > 4 ? s.Substring(4).Trim('"').Replace('\\', '/') + "/" : path;
+                                break;
                         }
                     }
                 }
@@ -136,11 +140,6 @@ namespace Simitone.Windows
                 var start = new GameStartProxy();
                 start.Start(useDX);
             }
-        }
-
-        private static void Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = !(GameFacade.Screens.CurrentUIScreen?.CloseAttempt() ?? true);
         }
 
         private static System.Reflection.Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
